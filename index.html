@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division Quiz for 8 Year Olds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #timer {
+            font-size: 24px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Division Quiz</h1>
+    <div id="timer">Time left: <span id="time">60</span> seconds</div>
+
+    <form id="quiz">
+        <p>1. What is 8 ÷ 2?</p>
+        <label><input type="radio" name="q1" value="3"> 3</label><br>
+        <label><input type="radio" name="q1" value="4"> 4</label><br>
+        <label><input type="radio" name="q1" value="5"> 5</label><br>
+
+        <p>2. What is 12 ÷ 3?</p>
+        <label><input type="radio" name="q2" value="3"> 3</label><br>
+        <label><input type="radio" name="q2" value="4"> 4</label><br>
+        <label><input type="radio" name="q2" value="5"> 5</label><br>
+
+        <p>3. What is 15 ÷ 5?</p>
+        <label><input type="radio" name="q3" value="2"> 2</label><br>
+        <label><input type="radio" name="q3" value="3"> 3</label><br>
+        <label><input type="radio" name="q3" value="4"> 4</label><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        let timeLeft = 60;
+        const timerElement = document.getElementById('time');
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up!');
+                document.getElementById('quiz').submit();
+            } else {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
