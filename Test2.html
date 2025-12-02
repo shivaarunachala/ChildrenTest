@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Awesome Kids Quiz! 🌟</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f7f3ff;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff69b4; /* Pink */
+            border-bottom: 3px dashed #8a2be2; /* Blue-Violet */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .question {
+            text-align: left;
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #add8e6; /* Light Blue */
+            border-radius: 10px;
+            background-color: #e0ffff; /* Light Cyan */
+        }
+        .question p {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #4b0082; /* Indigo */
+        }
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        button {
+            background-color: #00ced1; /* Dark Turquoise */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1e90ff; /* Dodger Blue */
+        }
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #ff4500; /* Orange Red */
+            border-radius: 10px;
+            background-color: #ffe4e1; /* Misty Rose */
+            font-size: 1.5em;
+            font-weight: bold;
+            display: none; /* Hide until quiz is submitted */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌟 The 25-Question Fun Quiz! 🚀</h1>
+
+    <form id="quizForm">
+        <div class="question">
+            <p>1. What color is the sky on a sunny day?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> Red</label>
+                <label><input type="radio" name="q1" value="b"> Green</label>
+                <label><input type="radio" name="q1" value="c"> **Blue**</label>
+                <label><input type="radio" name="q1" value="d"> Yellow</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>2. How many legs does a dog have?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> Two</label>
+                <label><input type="radio" name="q2" value="b"> Six</label>
+                <label><input type="radio" name="q2" value="c"> Three</label>
+                <label><input type="radio" name="q2" value="d"> **Four**</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. Which planet is known as the 'Red Planet'?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> Jupiter</label>
+                <label><input type="radio" name="q3" value="b"> **Mars**</label>
+                <label><input type="radio" name="q3" value="c"> Earth</label>
+                <label><input type="radio" name="q3" value="d"> Venus</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. What do you use to write on a blackboard?</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> Pen</label>
+                <label><input type="radio" name="q4" value="b"> Marker</label>
+                <label><input type="radio" name="q4" value="c"> **Chalk**</label>
+                <label><input type="radio" name="q4" value="d"> Crayon</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>5. How many hours are in one day?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> 12</label>
+                <label><input type="radio" name="q5" value="b"> 60</label>
+                <label><input type="radio" name="q5" value="c"> 7</label>
+                <label><input type="radio" name="q5" value="d"> **24**</label>
+            </div>
+        </div>
+        <button type="submit">✨ Finish Quiz! ✨</button>
+    </form>
+
+    <div id="results"></div>
+
+</div>
+
+<script>
+    // Define the correct answers for all 25 questions
+    // This object maps the question name (q1, q2, etc.) to the correct option value (a, b, c, or d)
+    const correctAnswers = {
+        q1: 'c', // Blue
+        q2: 'd', // Four
+        q3: 'b', // Mars
+        q4: 'c', // Chalk
+        q5: 'd', // 24
+        // **!!! YOU MUST ADD 20 MORE CORRECT ANSWERS HERE !!!**
+        // e.g., q6: 'a', q7: 'b', q8: 'c', ... up to q25: 'x'
+    };
+
+    const form = document.getElementById('quizForm');
+    const resultsDiv = document.getElementById('results');
+    const totalQuestions = 25; // Change this if you change the number of questions!
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop the form from refreshing the page
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const questionName = 'q' + i;
+            // Get all radio buttons for the current question
+            const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+            
+            // Check if an answer was selected
+            if (selected) {
+                // Check if the selected answer is correct
+                if (selected.value === correctAnswers[questionName]) {
+                    score++; // Increment the score if it's correct
+                }
+            } else {
+                unanswered++; // Count as unanswered
+            }
+        }
+
+        // Calculate percentage score
+        const percentage = (score / totalQuestions) * 100;
+
+        let message = `You got **${score}** out of ${totalQuestions} correct! (${percentage.toFixed(0)}%)`;
+
+        // Add a fun message based on the score
+        if (score === totalQuestions) {
+            message += '<br> 🎉 Amazing! You are a Quiz Master! 🎉';
+        } else if (score >= totalQuestions * 0.8) {
+            message += '<br> 🌟 Great job! You know so much! 🌟';
+        } else if (score >= totalQuestions * 0.5) {
+            message += '<br> 👍 Good effort! Keep learning! 👍';
+        } else {
+            message += '<br> 📚 Time to read up and try again! 😃';
+        }
+        
+        if (unanswered > 0) {
+            message += `<br><span style="font-size:0.8em; color: gray;">(You skipped ${unanswered} questions.)</span>`;
+        }
+
+
+        // Display the results
+        resultsDiv.innerHTML = message;
+        resultsDiv.style.display = 'block';
+
+        // Scroll down to see the results
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
